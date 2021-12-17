@@ -3,5 +3,6 @@ plotly
 dash>=2.0
 dash_bootstrap_components
 dash_bio
+dash_bio_utils
 pandas
 numpy

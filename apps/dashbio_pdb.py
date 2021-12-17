@@ -68,10 +68,10 @@ class SpikePdbData:
                 styles.append({'visualization_type': 'stick', 'color': highlight_bg_indexes_color_map[rsd_idx]})
 
             elif rsd_idx in highlight_bg_indexes:
-                styles.append({'visualization_type': 'stick', 'color': 'yellow'})
+                styles.append({'visualization_type': 'stick', 'color': '#E45E68'})
 
             else:
-                styles.append({'visualization_type': 'stick', 'color': '#FFFFFF'})
+                styles.append({'visualization_type': 'line', 'color': '#AAAAAA'})
                     
         return styles
 
