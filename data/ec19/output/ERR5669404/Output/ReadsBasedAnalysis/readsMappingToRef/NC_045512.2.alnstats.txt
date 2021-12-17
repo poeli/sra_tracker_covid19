@@ -1,0 +1,16 @@
+163742 + 0 in total (QC-passed reads + QC-failed reads)
+0 + 0 secondary
+0 + 0 supplementary
+0 + 0 duplicates
+163714 + 0 mapped (99.98% : N/A)
+0 + 0 paired in sequencing
+0 + 0 read1
+0 + 0 read2
+0 + 0 properly paired (N/A : N/A)
+0 + 0 with itself and mate mapped
+0 + 0 singletons (N/A : N/A)
+0 + 0 with mate mapped to a different chr
+0 + 0 with mate mapped to a different chr (mapQ>=5)
+
+Ref	Ref_len	Ref_GC%	Mapped_reads	Ref_recovery%	Avg_fold(x)	Fold_std	Num_of_Gap	Total_Gap_bases
+NC_045512_2	29870	38.01	163714	99.7054	1951.99	3181.00	2	88	

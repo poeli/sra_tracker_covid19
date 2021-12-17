@@ -1,0 +1,146 @@
+[project]
+cpu=4
+outpath=
+projname=SRR14135907
+projdesc=PRJNA625551 SAMN18605214 VA-DCLS-2930
+projid=
+projcode=
+projowner=
+projrunhost=
+
+[Download Fastq]
+DoFastqDownload=auto
+
+[Download SRA]
+DoSRADownload=1
+SRA_id=SRR14135907
+
+[Count Fastq]
+DoCountFastq=auto
+fastq_source=not
+
+[Quality Trim and Filter]
+DoQC=1
+q=20
+min_L=50
+avg_q=0
+n=0
+lc=0.85
+adapter=
+porechop=0
+5end=0
+3end=0
+
+[Host Removal]
+DoHostRemoval=0
+Host=
+bwaMemOptions="-T 50"
+similarity=90
+
+[Assembly]
+DoAssembly=0
+assembledContigs=
+minContigSize=200
+assembler=idba_ud
+idbaOptions="--pre_correction --mink 31 --maxk 121 --step 20 --min_contig 200"
+SpadesSingleCellMode=0
+SpadesMetagenomeMode=0
+SpadesPacbioFile=
+SpadesNanoporeFile=
+megahit_preset=meta
+
+[Reads Mapping To Contigs]
+DoReadsMappingContigs=auto
+r2c_aligner=bwa
+r2c_aligner_options=
+r2c_extract_unmapped=0
+
+[Reads Mapping To Reference]
+DoReadsMappingReference=1
+r2g_aligner=bwa
+r2g_aligner_options=
+window_size=1000
+step_size=200
+reference=/panfs/biopan04/scratch-migun/nCov-2019/data/NC_045512.2.gbk,/panfs/biopan04/scratch-migun/nCov-2019/sars-cov-2-sra_runs/gisaid/indiv_fasta/USA/EPI_ISL_978194.fna
+MapUnmappedReads=0
+r2g_extract_mapped=0
+r2g_extract_unmapped=0
+r2g_max_clip=50
+r2g_align_trim_bed_file=/panfs/biopan04/edge_covid19/edge_ui/data/artic_ncov2019_primer_schemes_V3.bed
+r2g_get_consensus=1
+r2g_consensus_min_mapQ=60
+r2g_consensus_max_cov=8000
+r2g_consensus_alt_prop=0.5
+r2g_consensus_altIndel_prop=0.5
+r2g_consensus_min_cov=5
+r2g_consensus_min_baseQ=20
+r2g_consensus_disable_BAQ=1
+r2g_consensus_pcr_dedup=0
+r2g_consensus_comp_opt=1
+r2g_variant_call=1
+r2g_variant_call_ploidy=haploid
+
+[Reads Taxonomy Classification]
+DoReadsTaxonomy=0
+AllReads=0
+enabledTools=gottcha-genDB-b,gottcha-speDB-b,gottcha-strDB-b,gottcha-genDB-v,gottcha-speDB-v,gottcha-strDB-v,bwa,metaphlan2,kraken
+
+[Contigs Mapping To Reference]
+DoContigMapping=auto
+identity=85
+MapUnmappedContigs=0
+
+[Variant Analysis]
+DoVariantAnalysis=1
+
+[Contigs Taxonomy Classification]
+DoContigsTaxonomy=0
+
+[Contigs Blast]
+DoBlast=0
+BLAST_nr_DB=0
+BLAST_nt_DB=0
+
+[Contigs Annotation]
+DoAnnotation=0
+kingdom=Bacteria
+contig_size_cut_for_annotation=700
+annotateProgram=prokka
+annotateSourceGBK=
+
+[ProPhage Detection]
+DoProPhageDetection=auto
+
+[Phylogenetic Analysis]
+DoSNPtree=0
+SNPdbName=
+SNPGenomes=
+SNPGenomesFiles=
+SNPrefGenome=
+treeMaker=FastTree
+SNP_SRA_ids=
+PhaMEbootstrap=1
+PhaMEbootstrap_num=100
+
+[Primer Validation]
+DoPrimerValidation=0
+maxMismatch=1
+primer=
+
+[Primer Design]
+DoPrimerDesign=0
+tm_opt=59
+tm_min=57
+tm_max=63
+len_opt=18
+len_min=20
+len_max=27
+tm_diff=5
+top=5
+
+[Generate JBrowse Tracks]
+DoJBrowse=0
+
+[HTML Report]
+DoHTMLReport=1
+

@@ -1,0 +1,2 @@
+Chromosome	INDEL_position	Sequence	Length	Type	Product	CDS_start	CDS_end	Frameshift
+NC_045512_2	1604	AATGAC	6	Deletion	GU280_gp01:orf1a polyprotein	266	13483	No

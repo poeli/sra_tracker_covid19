@@ -1,0 +1,11 @@
+lineage	lineage_pango	nextstrain_clade	type	first_detected	first_emerged	predicted_attr
+Alpha	B.1.1.7/Q.*	20I/501Y.V1 	VOC	United Kingdom 	20 September 2020 	56% increased primary transmission (est. 50%-74%), Increased secondary attack rate (est. 10% to 55%) 
+Beta	B.1.351	20H/501Y.V2 	VOC	South Africa	Early August 2020 	50% increased primary transmission (range 20%-113%) 
+Gamma	P.1	20J/501Y.V3 	VOC	Brazil / Japan 	December 2020 	Suggested to be increased based on similar spike protein substitutions in B.1.351 
+Delta	B.1.617.2/AY.*	20A/S:478K	VOC	India	India, October 2020 	Potential reduction in neutralization by some EUA monoclonal antibody treatments. Potential reduction in neutralization by post-vaccination sera.
+Eta	B.1.525	20A/S:484K	VOI	United Kingdom/Nigeria	UK, December 2020 	SGTF; Escape from mAb; likely reduced neutralization by convalescent sera and vaccinee sera; may have increased virus replication 
+Iota	B.1.526	20C/S:484K	VOI	New York 	US-NY, November 2020 	Potential loss of neutralizing activity of some monoclonal antibodies as well as most convalescent and vaccinee sera; potential increase in infectivity 
+Kappa	B.1.617.1	20A/S:154K	VOI	India	India, December 2020 	Potential reduction in neutralization by some EUA monoclonal antibody treatments. Potential reduction in neutralization by post-vaccination sera.
+Lambda	C.37	GR/452Q.V1	VOI	Peru	Peru, Aug-2020	
+Mu	B.1.621	GH/21H	VOI	Colombia	Colombia, Jan-2021	
+Omicron	B.1.1.529	GR/484A	VOC	South Africa	South Africa, Nov-2021	

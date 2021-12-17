@@ -1,0 +1,6 @@
+name	start	end	nc_start	nc_end	note
+S1_NTD	13	304	39	912	N-terminal domain of the S1 subunit of the Spike (S) protein from SARS-CoV and related betacoronaviruses in the B lineage
+S1_RBD	319	541	957	1623	receptor-binding domain of the S1 subunit of SARS-CoV-2 Spike (S) protein
+heptad repeat 1	918	983	2754	2949	heptad repeat 1 [structural motif]
+heptad repeat 2	1162	1203	3486	3609	heptad repeat 2 [structural motif]
+S2_C	1233	1273	3699	3819	Coronavirus spike glycoprotein S2 intravirion

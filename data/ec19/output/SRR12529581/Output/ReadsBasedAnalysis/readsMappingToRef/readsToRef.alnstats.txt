@@ -1,0 +1,5 @@
+Ref	Ref_len	Ref_GC%	Mapped_reads	Ref_recovery%	Avg_fold(x)	Fold_std	Num_of_Gap	Total_Gap_bases	Num_of_SNPs	Num_of_INDELs
+hCoV_19_Australia_VIC5740_2020_EPI_ISL_518541_2020_07_19_2020_08_25_Australia_	29813	37.99	754561	100.0000	3438.14	1790.28	0	0	0	0
+
+NC_045512_2	29870	38.01	754561	99.8427	3431.58	1794.85	2	47	14	0
+

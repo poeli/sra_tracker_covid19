@@ -1,0 +1,5 @@
+Chromosome	INDEL_position	Sequence	Length	Type	Product	CDS_start	CDS_end	Frameshift
+NC_045512_2	11288	TCTGGTTTT	9	Deletion	GU280_gp01:orf1a polyprotein	266	13483	No
+NC_045512_2	21765	TACATG	6	Deletion	GU280_gp02:surface glycoprotein	21563	25384	No
+NC_045512_2	21991	TTA	3	Deletion	GU280_gp02:surface glycoprotein	21563	25384	No
+NC_045512_2	28271	A	1	Deletion	Intergenic region			No

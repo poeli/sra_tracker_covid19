@@ -1,0 +1,1 @@
+Chromosome	INDEL_position	Ref_Seq	Indel_seq	Length	Type	Product	CDS_start	CDS_end	Frameshift	Count	DP	Ratio	F:R	Root-mean-square-mapping_quality

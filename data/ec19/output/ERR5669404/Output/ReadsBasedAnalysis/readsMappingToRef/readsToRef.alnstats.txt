@@ -1,0 +1,5 @@
+Ref	Ref_len	Ref_GC%	Mapped_reads	Ref_recovery%	Avg_fold(x)	Fold_std	Num_of_Gap	Total_Gap_bases
+hCoV_19_England_LIVE_E0C4CE_2021_2021_03_18_2021_04_05	29763	36.74	163685	97.4801	1958.68	3184.98	3	750	
+
+NC_045512_2	29870	38.01	163714	99.7054	1951.99	3181.00	2	88	
+

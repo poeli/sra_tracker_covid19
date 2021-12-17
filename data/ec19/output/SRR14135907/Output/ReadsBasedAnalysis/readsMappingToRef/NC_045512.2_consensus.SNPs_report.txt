@@ -1,0 +1,24 @@
+Chromosome	SNP_position	Ref_codon	Sub_codon	aa_Ref	aa_Sub	Synonymous	Product	CDS_start	CDS_end	CDS_strand
+NC_045512_2	241	C	T				Intergenic region			
+NC_045512_2	2180	GTA	ATA	V	I	No	GU280_gp01:orf1a polyprotein	266	13483	+
+NC_045512_2	3037	TTC	TTT	F	F	Yes	GU280_gp01:orf1a polyprotein	266	13483	+
+NC_045512_2	3177	CCT	CTT	P	L	No	GU280_gp01:orf1a polyprotein	266	13483	+
+NC_045512_2	4002	ACT	ATT	T	I	No	GU280_gp01:orf1a polyprotein	266	13483	+
+NC_045512_2	4180	AAG	AAT	K	N	No	GU280_gp01:orf1a polyprotein	266	13483	+
+NC_045512_2	6706	AAC	AAT	N	N	Yes	GU280_gp01:orf1a polyprotein	266	13483	+
+NC_045512_2	10097	GGT	AGT	G	S	No	GU280_gp01:orf1a polyprotein	266	13483	+
+NC_045512_2	11938	TGT	TGC	C	C	Yes	GU280_gp01:orf1a polyprotein	266	13483	+
+NC_045512_2	13536	TAC	TAT	Y	Y	Yes	GU280_gp01:orf1ab polyprotein	13468	21555	+
+NC_045512_2	14408	CCT	CTT	P	L	No	GU280_gp01:orf1ab polyprotein	13468	21555	+
+NC_045512_2	15240	AAC	AAT	N	N	Yes	GU280_gp01:orf1ab polyprotein	13468	21555	+
+NC_045512_2	19158	CAT	CAC	H	H	Yes	GU280_gp01:orf1ab polyprotein	13468	21555	+
+NC_045512_2	21621	ACC	ATC	T	I	No	GU280_gp02:surface glycoprotein	21563	25384	+
+NC_045512_2	23403	GAT	GGT	D	G	No	GU280_gp02:surface glycoprotein	21563	25384	+
+NC_045512_2	23443	GAT	GAC	D	D	Yes	GU280_gp02:surface glycoprotein	21563	25384	+
+NC_045512_2	23731	ACC	ACT	T	T	Yes	GU280_gp02:surface glycoprotein	21563	25384	+
+NC_045512_2	26681	TTC	TTT	F	F	Yes	GU280_gp05:membrane glycoprotein	26523	27191	+
+NC_045512_2	28777	CCA	CCC	P	P	Yes	GU280_gp10:nucleocapsid phosphoprotein	28274	29533	+
+NC_045512_2	28881	AGG	AAA	R	K	No	GU280_gp10:nucleocapsid phosphoprotein	28274	29533	+
+NC_045512_2	28882	G	A	Merged with SNP 28881						
+NC_045512_2	28883	GGA	CGA	G	R	No	GU280_gp10:nucleocapsid phosphoprotein	28274	29533	+
+NC_045512_2	28975	ATG	ATT	M	I	No	GU280_gp10:nucleocapsid phosphoprotein	28274	29533	+

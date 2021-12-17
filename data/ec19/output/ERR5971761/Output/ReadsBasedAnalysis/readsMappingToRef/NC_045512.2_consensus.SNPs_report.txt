@@ -1,0 +1,34 @@
+Chromosome	SNP_position	Ref_codon	Sub_codon	aa_Ref	aa_Sub	Synonymous	Product	CDS_start	CDS_end	CDS_strand
+NC_045512_2	210	G	T				Intergenic region			
+NC_045512_2	241	C	T				Intergenic region			
+NC_045512_2	3037	TTC	TTT	F	F	Yes	GU280_gp01:orf1a polyprotein	266	13483	+
+NC_045512_2	4181	GCT	TCT	A	S	No	GU280_gp01:orf1a polyprotein	266	13483	+
+NC_045512_2	6402	CCA	CTA	P	L	No	GU280_gp01:orf1a polyprotein	266	13483	+
+NC_045512_2	7124	CCT	TCT	P	S	No	GU280_gp01:orf1a polyprotein	266	13483	+
+NC_045512_2	7851	GCT	GTT	A	V	No	GU280_gp01:orf1a polyprotein	266	13483	+
+NC_045512_2	8986	GAC	GAT	D	D	Yes	GU280_gp01:orf1a polyprotein	266	13483	+
+NC_045512_2	9053	GTA	TTA	V	L	No	GU280_gp01:orf1a polyprotein	266	13483	+
+NC_045512_2	10029	ACC	ATC	T	I	No	GU280_gp01:orf1a polyprotein	266	13483	+
+NC_045512_2	11201	ACT	GCT	T	A	No	GU280_gp01:orf1a polyprotein	266	13483	+
+NC_045512_2	11332	GTA	GTG	V	V	Yes	GU280_gp01:orf1a polyprotein	266	13483	+
+NC_045512_2	14408	CCT	CTT	P	L	No	GU280_gp01:orf1ab polyprotein	13468	21555	+
+NC_045512_2	15451	GGT	AGT	G	S	No	GU280_gp01:orf1ab polyprotein	13468	21555	+
+NC_045512_2	16466	CCA	CTA	P	L	No	GU280_gp01:orf1ab polyprotein	13468	21555	+
+NC_045512_2	19220	GCT	GTT	A	V	No	GU280_gp01:orf1ab polyprotein	13468	21555	+
+NC_045512_2	21618	ACA	AGA	T	R	No	GU280_gp02:surface glycoprotein	21563	25384	+
+NC_045512_2	22421	GAT	CAT	D	H	No	GU280_gp02:surface glycoprotein	21563	25384	+
+NC_045512_2	22917	CTG	CGG	L	R	No	GU280_gp02:surface glycoprotein	21563	25384	+
+NC_045512_2	22995	ACA	AAA	T	K	No	GU280_gp02:surface glycoprotein	21563	25384	+
+NC_045512_2	23403	GAT	GGT	D	G	No	GU280_gp02:surface glycoprotein	21563	25384	+
+NC_045512_2	23604	CCT	CGT	P	R	No	GU280_gp02:surface glycoprotein	21563	25384	+
+NC_045512_2	24410	GAT	AAT	D	N	No	GU280_gp02:surface glycoprotein	21563	25384	+
+NC_045512_2	25469	TCA	TTA	S	L	No	GU280_gp03:ORF3a protein	25393	26220	+
+NC_045512_2	26767	ATC	ACC	I	T	No	GU280_gp05:membrane glycoprotein	26523	27191	+
+NC_045512_2	27638	GTT	GCT	V	A	No	GU280_gp07:ORF7a protein	27394	27759	+
+NC_045512_2	27752	ACA	ATA	T	I	No	GU280_gp07:ORF7a protein	27394	27759	+
+NC_045512_2	27874	ACT	ATT	T	I	No	GU280_gp08:ORF7b	27756	27887	+
+NC_045512_2	28461	GAC	GGC	D	G	No	GU280_gp10:nucleocapsid phosphoprotein	28274	29533	+
+NC_045512_2	28881	AGG	ATG	R	M	No	GU280_gp10:nucleocapsid phosphoprotein	28274	29533	+
+NC_045512_2	28916	GGT	TGT	G	C	No	GU280_gp10:nucleocapsid phosphoprotein	28274	29533	+
+NC_045512_2	29402	GAT	TAT	D	Y	No	GU280_gp10:nucleocapsid phosphoprotein	28274	29533	+
+NC_045512_2	29742	G	T				Intergenic region			

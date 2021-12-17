@@ -1,0 +1,1 @@
+Chromosome	SNP_position	Ref_codon	Sub_codon	aa_Ref	aa_Sub	Synonymous	Product	CDS_start	CDS_end	CDS_strand

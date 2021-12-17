@@ -1,0 +1,1 @@
+Chromosome	INDEL_position	Sequence	Length	Type	Product	CDS_start	CDS_end	Frameshift

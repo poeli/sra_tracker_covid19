@@ -1,0 +1,5 @@
+Ref	Ref_len	Ref_GC%	Mapped_reads	Ref_recovery%	Avg_fold(x)	Fold_std	Num_of_Gap	Total_Gap_bases	Num_of_SNPs	Num_of_INDELs
+hCoV_19_USA_VA_DCLS_2930_2020_2020_12_09_2021_02_11	29894	37.93	285593	99.8461	914.33	441.46	1	46	0	0
+
+NC_045512_2	29870	38.01	285593	99.9464	915.07	440.82	2	16	24	0
+

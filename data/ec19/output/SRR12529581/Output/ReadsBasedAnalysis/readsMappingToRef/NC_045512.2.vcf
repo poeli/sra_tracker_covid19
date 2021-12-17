@@ -1,0 +1,48 @@
+##fileformat=VCFv4.2
+##FILTER=<ID=PASS,Description="All filters passed">
+##bcftoolsVersion=1.11+htslib-1.11
+##bcftoolsCommand=mpileup -B -A -q 60 -d 1000 -L 1000 -m 3 -Ov -f /panfs/biopan04/scratch-migun/nCov-2019/sars-cov-2-sra_runs/data/sra_runs/matched_srx/AMPLICON/ARTIC-V3/ILLUMINA/SRR12529581/Output/ReadsBasedAnalysis/readsMappingToRef/tmp/NC_045512.2.fasta /panfs/biopan04/scratch-migun/nCov-2019/sars-cov-2-sra_runs/data/sra_runs/matched_srx/AMPLICON/ARTIC-V3/ILLUMINA/SRR12529581/Output/ReadsBasedAnalysis/readsMappingToRef/NC_045512.2.sort.bam
+##reference=file:///panfs/biopan04/scratch-migun/nCov-2019/sars-cov-2-sra_runs/data/sra_runs/matched_srx/AMPLICON/ARTIC-V3/ILLUMINA/SRR12529581/Output/ReadsBasedAnalysis/readsMappingToRef/tmp/NC_045512.2.fasta
+##contig=<ID=NC_045512_2,length=29870>
+##ALT=<ID=*,Description="Represents allele(s) other than observed.">
+##INFO=<ID=INDEL,Number=0,Type=Flag,Description="Indicates that the variant is an INDEL.">
+##INFO=<ID=IDV,Number=1,Type=Integer,Description="Maximum number of raw reads supporting an indel">
+##INFO=<ID=IMF,Number=1,Type=Float,Description="Maximum fraction of raw reads supporting an indel">
+##INFO=<ID=DP,Number=1,Type=Integer,Description="Raw read depth">
+##INFO=<ID=VDB,Number=1,Type=Float,Description="Variant Distance Bias for filtering splice-site artefacts in RNA-seq data (bigger is better)",Version="3">
+##INFO=<ID=RPB,Number=1,Type=Float,Description="Mann-Whitney U test of Read Position Bias (bigger is better)">
+##INFO=<ID=MQB,Number=1,Type=Float,Description="Mann-Whitney U test of Mapping Quality Bias (bigger is better)">
+##INFO=<ID=BQB,Number=1,Type=Float,Description="Mann-Whitney U test of Base Quality Bias (bigger is better)">
+##INFO=<ID=MQSB,Number=1,Type=Float,Description="Mann-Whitney U test of Mapping Quality vs Strand Bias (bigger is better)">
+##INFO=<ID=SGB,Number=1,Type=Float,Description="Segregation based metric.">
+##INFO=<ID=MQ0F,Number=1,Type=Float,Description="Fraction of MQ0 reads (smaller is better)">
+##FORMAT=<ID=PL,Number=G,Type=Integer,Description="List of Phred-scaled genotype likelihoods">
+##FORMAT=<ID=GT,Number=1,Type=String,Description="Genotype">
+##INFO=<ID=AF1,Number=1,Type=Float,Description="Max-likelihood estimate of the first ALT allele frequency (assuming HWE)">
+##INFO=<ID=AF2,Number=1,Type=Float,Description="Max-likelihood estimate of the first and second group ALT allele frequency (assuming HWE)">
+##INFO=<ID=AC1,Number=1,Type=Float,Description="Max-likelihood estimate of the first ALT allele count (no HWE assumption)">
+##INFO=<ID=MQ,Number=1,Type=Integer,Description="Root-mean-square mapping quality of covering reads">
+##INFO=<ID=FQ,Number=1,Type=Float,Description="Phred probability of all samples being the same">
+##INFO=<ID=PV4,Number=4,Type=Float,Description="P-values for strand bias, baseQ bias, mapQ bias and tail distance bias">
+##INFO=<ID=G3,Number=3,Type=Float,Description="ML estimate of genotype frequencies">
+##INFO=<ID=HWE,Number=1,Type=Float,Description="Chi^2 based HWE test P-value based on G3">
+##INFO=<ID=DP4,Number=4,Type=Integer,Description="Number of high-quality ref-forward , ref-reverse, alt-forward and alt-reverse bases">
+##bcftools_callVersion=1.11+htslib-1.11
+##bcftools_callCommand=call --ploidy 1 -M -cO b -; Date=Sun Feb 28 05:05:05 2021
+##bcftools_viewVersion=1.11+htslib-1.11
+##bcftools_viewCommand=view -v snps,indels,mnps,ref,bnd,other -Ov /panfs/biopan04/scratch-migun/nCov-2019/sars-cov-2-sra_runs/data/sra_runs/matched_srx/AMPLICON/ARTIC-V3/ILLUMINA/SRR12529581/Output/ReadsBasedAnalysis/readsMappingToRef/NC_045512.2.raw.bcf; Date=Sun Feb 28 05:05:15 2021
+#CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO	FORMAT	/panfs/biopan04/scratch-migun/nCov-2019/sars-cov-2-sra_runs/data/sra_runs/matched_srx/AMPLICON/ARTIC-V3/ILLUMINA/SRR12529581/Output/ReadsBasedAnalysis/readsMappingToRef/NC_045512.2.sort.bam
+NC_045512_2	241	.	C	T	225.007	.	DP=983;VDB=0.999992;SGB=-0.693147;MQSB=1;MQ0F=0;AF1=1;AC1=1;DP4=0,0,377,441;MQ=60;FQ=-999	GT:PL	1:255,0
+NC_045512_2	1163	.	A	T	225.007	.	DP=994;VDB=0.374847;SGB=-0.693147;MQSB=1;MQ0F=0;AF1=1;AC1=1;DP4=0,0,464,363;MQ=60;FQ=-999	GT:PL	1:255,0
+NC_045512_2	3037	.	C	T	225.007	.	DP=997;VDB=0.19578;SGB=-0.693147;MQSB=1;MQ0F=0;AF1=1;AC1=1;DP4=0,0,548,341;MQ=60;FQ=-999	GT:PL	1:255,0
+NC_045512_2	7540	.	T	C	225.007	.	DP=952;VDB=0.999997;SGB=-0.693147;MQSB=1;MQ0F=0;AF1=1;AC1=1;DP4=0,0,422,318;MQ=60;FQ=-999	GT:PL	1:255,0
+NC_045512_2	14408	.	C	T	225.007	.	DP=993;VDB=1;SGB=-0.693147;MQSB=1;MQ0F=0;AF1=1;AC1=1;DP4=0,0,650,244;MQ=60;FQ=-999	GT:PL	1:255,0
+NC_045512_2	16647	.	G	T	225.007	.	DP=934;VDB=0.856411;SGB=-0.693147;MQSB=1;MQ0F=0;AF1=1;AC1=1;DP4=0,0,476,376;MQ=60;FQ=-999	GT:PL	1:255,0
+NC_045512_2	18555	.	C	T	225.007	.	DP=941;VDB=5.19296e-06;SGB=-0.693147;MQSB=1;MQ0F=0;AF1=1;AC1=1;DP4=0,0,273,501;MQ=60;FQ=-999	GT:PL	1:255,0
+NC_045512_2	22992	.	G	A	225.007	.	DP=344;VDB=0.0145736;SGB=-0.693147;MQSB=1;MQ0F=0;AF1=1;AC1=1;DP4=0,0,202,19;MQ=60;FQ=-999	GT:PL	1:255,0
+NC_045512_2	23401	.	G	A	225.007	.	DP=933;VDB=0.00642806;SGB=-0.693147;RPB=1;MQB=1;MQSB=1;BQB=1;MQ0F=0;AF1=1;AC1=1;DP4=1,0,437,328;MQ=60;FQ=-999;PV4=1,0.0477022,1,1	GT:PL	1:255,0
+NC_045512_2	23403	.	A	G	225.007	.	DP=963;VDB=0.10412;SGB=-0.693147;RPB=1;MQB=1;MQSB=1;BQB=1;MQ0F=0;AF1=1;AC1=1;DP4=1,0,451,328;MQ=60;FQ=-999;PV4=1,1,1,0.309294	GT:PL	1:255,0
+NC_045512_2	25690	.	G	T	225.007	.	DP=1007;VDB=2.9696e-32;SGB=-0.693147;MQSB=1;MQ0F=0;AF1=1;AC1=1;DP4=0,0,734,106;MQ=60;FQ=-999	GT:PL	1:255,0
+NC_045512_2	28881	.	G	A	225.007	.	DP=744;VDB=0.999996;SGB=-0.693147;MQSB=1;MQ0F=0;AF1=1;AC1=1;DP4=0,0,448,213;MQ=60;FQ=-999	GT:PL	1:255,0
+NC_045512_2	28882	.	G	A	225.007	.	DP=740;VDB=0.999994;SGB=-0.693147;MQSB=1;MQ0F=0;AF1=1;AC1=1;DP4=0,0,446,211;MQ=60;FQ=-999	GT:PL	1:255,0
+NC_045512_2	28883	.	G	C	225.007	.	DP=763;VDB=1;SGB=-0.693147;MQSB=1;MQ0F=0;AF1=1;AC1=1;DP4=0,0,447,230;MQ=60;FQ=-999	GT:PL	1:255,0
