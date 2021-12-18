@@ -49,8 +49,8 @@ assets_proj_url = None
 proj_path = None
 
 # for mol3d viewer
-pdb         = f'{assets_data_path}/6VXX.pdb'
-blast_xml   = f'{assets_data_path}/6VXX_blastp.xml'
+pdb         = f'{assets_data_path}/6ACJ.pdb'
+blast_xml   = f'{assets_data_path}/6ACJ_full_blastp.xml'
 spike_pdb   = SpikePdbData(pdb, blast_xml)
 mol3d_spike = dashbio.Molecule3dViewer(id='dashbio-mol3d', modelData=spike_pdb.pdb_data)
 
@@ -117,20 +117,17 @@ def generate_snp_table():
                         {
                             'if': {
                                 'filter_query': '{Product} = "S" && {Synonymous} = "No"',
-                            },
-                            'backgroundColor': '#FFD8D9',
-                        },
-                        {
-                            'if': {
                                 'column_id': 'Mutation'
                             },
                             'cursor': 'pointer',
+                            'textDecoration': 'underline',
+                            'textDecorationStyle': 'dotted',
                         },
                         {
-                            'if': {
-                                'column_id': 'SNP_position'
-                            },
+                            'if': { 'column_id': 'SNP_position' },
                             'cursor': 'pointer',
+                            'textDecoration': 'underline',
+                            'textDecorationStyle': 'dotted',
                         },
                     ],
                     style_header_conditional=[{
@@ -236,10 +233,13 @@ def generate_mol3d_spike_default():
     mol3d_spike_pos = [int(float(x)) for x in mol3d_spike_pos]
     mol3d_spike_text = df_snps.query("Product=='S' and Synonymous=='No'").Mutation.unique().tolist()
 
-    residue_indexes = spike_pdb.spike2pdb_residue_indexes(mol3d_spike_pos)
+    residue_indexes = spike_pdb.spike_pos2pdb_residue_index(mol3d_spike_pos)
     
-    # hightlight RBD
-    opts = dict(highlight_bg_indexes = spike_pdb.spike2pdb_residue_indexes(range(319,541)))
+    # hightlight RBD and D chain
+    opts = dict(
+        highlight_bg_indexes = spike_pdb.spike_pos2pdb_residue_index(range(319,541)),
+        highlight_bg_chain = ['D']
+    )
     
     settings = dict(
         styles = spike_pdb.pdb_style(residue_indexes, **opts),
@@ -595,6 +595,7 @@ def generate_layout_info_cards():
     return info_cards
 
 
+# Dash app conponents
 
 # variant-mutation comparison
 dropdown_menu_variant = html.Div([
@@ -636,9 +637,6 @@ slider_num_variant = html.Div([
             tooltip={"placement": "bottom", "always_visible": True},
         )
 ])
-
-
-# Dash app conponents
 
 # header
 header_div = html.Div(
@@ -752,6 +750,7 @@ warning_modal = html.Div(
                         html.H2("Oooops..."),
                         html.Hr(),
                         html.P([
+                            html.I(className="fas fa-exclamation-triangle me-2"),
                             "We can't find the project data for SRA ",
                             html.Span(id="modal-sra-acc"),
                             ". Click ",
@@ -782,6 +781,7 @@ layout = html.Div([
         #dcc.Location(id='url', refresh=False),
         dcc.Store(id='aggregate-data'),
         dcc.Store(id='sra-acc'),
+        dcc.Store(id='stored-mol3d-label'),
         dcc.Store(id="callback-holder"),
         warning_modal,
         html.Div(
@@ -824,10 +824,14 @@ layout = html.Div([
                 dbc.Col([ 
                           dcc.Store(id="dashbio-mol3d-default"),
                           html.Div([
-                              html.H5("S protein structure ", className='ml-3 d-inline'),
-                              dbc.Button("reset", id="mol3d-reset-btn", color="secondary", class_name="ml-3 btn-sm d-inline"),
+                              html.H5("S protein structure ", className='me-1 d-inline'),
+                              dbc.Button("reset", id="mol3d-reset-btn", color="secondary", className="me-1 btn-sm d-inline"),
+                              dbc.Button("toggle labels", id="mol3d-toggle-label-btn", color="secondary", className="me-1 btn-sm d-inline"),
                           ]),
-                          html.Div([mol3d_spike], id="mol3d-div"),
+                          html.Div([
+                              html.P("RDB styles in sticks and colored in light-red. Human ACE2 colored in green.", className='small'),
+                          ]),
+                          html.Div([mol3d_spike], id="mol3d-div")
                         ],
                         width=12, lg=4
                 ),
@@ -914,7 +918,7 @@ def check_url(pathname, search):
         if not exists(f'assets/ec19_output/{acc_num}/Output/config.txt'):
             return [acc_num, True]
     
-    return [dash.no_update, dash.no_update]
+    return [no_update, no_update]
 
 
 # init display page
@@ -1052,21 +1056,21 @@ def update_figures(data):
               Output('dashbio-mol3d', 'labels'),
               Output('mol3d-alert', 'children'),
               Output('mol3d-alert', 'is_open'),
+              Output('stored-mol3d-label', 'data'),
               [
                   Input('dashbio-mol3d-default', 'data'),
                   Input('snp-table', 'active_cell'),
                   Input('variant-mutation-graph', 'clickData'),
                   Input('mol3d-reset-btn', 'n_clicks'),
-                  State('dashbio-mol3d', 'zoom'),
-                  State('dashbio-mol3d', 'zoomTo'),
-                  State('dashbio-mol3d', 'styles'),
+                  Input('mol3d-toggle-label-btn', 'n_clicks'),
+                  State('stored-mol3d-label', 'data'),
                   State('dashbio-mol3d', 'labels'),
               ],
               prevent_initial_call=True
              )
 def update_mol3d(mol3d_default, snp_selected_cell, 
-                    vm_click_data, mol3d_reset,
-                    zoom, zoomTo, styles, labels):
+                    vm_click_data, mol3d_reset, mol3d_toggle_label, 
+                    stored_mol3d_label, labels):
     
     global spike_pdb
     global df_var_mutation_plot_data
@@ -1075,12 +1079,28 @@ def update_mol3d(mol3d_default, snp_selected_cell,
     
     alert_content = ""
     alert_is_open = False
-        
-    ctx = dash.callback_context
 
+    styles = no_update
+    zoomTo = no_update
+    zoom   = no_update
+    
+    ctx = dash.callback_context
+    
     triggered_id = None
     if ctx.triggered:
         triggered_id = ctx.triggered[0]['prop_id'].split('.')[0]
+
+    # toggle mol3d labels
+    if triggered_id == 'mol3d-toggle-label-btn':
+        if labels:
+            stored_mol3d_label = labels
+            labels = []
+        else:
+            labels = stored_mol3d_label
+            stored_mol3d_label = []
+    else:
+        # set labels to no_update for other triggers
+        labels = no_update
 
     # init mol3d to default settings
     if triggered_id == 'dashbio-mol3d-default' or triggered_id == 'mol3d-reset-btn':
@@ -1088,7 +1108,7 @@ def update_mol3d(mol3d_default, snp_selected_cell,
         labels = mol3d_default['labels']
         zoomTo = mol3d_default['zoomTo']
         zoom   = mol3d_default['zoom']
-    
+        
     # clicking "Mutation" on snp table
     if triggered_id == 'snp-table':
         
@@ -1099,13 +1119,18 @@ def update_mol3d(mol3d_default, snp_selected_cell,
             if product=='S' and snp_selected_cell['column_id']=='Mutation':
                 pos = int(df_snps.set_index('SNP_position').loc[snp_pos, 'AA_pos'])
                 # convert spike position to pdb_residue_index_chain
-                residue_index = spike_pdb.spike2pdb_residue_index_chain(pos)
+                residue_indexes = spike_pdb.spike_pos2pdb_residue_index([pos])
                 
-                zoomTo = {
-                    "sel": {"chain": "A", "resi": residue_index},
-                    "animationDuration": 0,
-                    "fixedPath": False,
-                }
+                if len(residue_indexes):
+                    zoomTo = {
+                        "sel": {"chain": "A", "resi": residue_indexes[0]},
+                        "animationDuration": 0,
+                        "fixedPath": False,
+                    }
+                else:
+                    alert_content = "Selected S position is not on the displayed structure."
+                    alert_is_open = True
+
             elif snp_selected_cell['column_id']=='SNP_position':
                 # clicking on 'Position' field will trigger another callback to
                 # change the locus to the clicked position.
@@ -1144,18 +1169,18 @@ def update_mol3d(mol3d_default, snp_selected_cell,
                 pass
 
         # var_spike_pos = [int(float(x)) for x in var_spike_pos]
-        var_residue_indexes = spike_pdb.spike2pdb_residue_indexes(var_spike_pos)
+        var_residue_indexes = spike_pdb.spike_pos2pdb_residue_index(var_spike_pos)
         
         # current sample
         sample_spike_pos = df_var_mutation_plot_data.query("type=='Sample'").pos.astype('int').tolist()
         sample_spike_mut = df_var_mutation_plot_data.query("type=='Sample'").mutation.tolist()
-        sample_residue_indexes = spike_pdb.spike2pdb_residue_indexes(sample_spike_pos)
+        sample_residue_indexes = spike_pdb.spike_pos2pdb_residue_index(sample_spike_pos)
         
         # generate residue_indexes color mapping dict
         residue_indexes_color_map = {}
 
         for x in var_residue_indexes:
-            residue_indexes_color_map[x] = 'orange'
+            residue_indexes_color_map[x] = '#FFA770'
 
         for x in sample_residue_indexes:
             residue_indexes_color_map[x] = '#459DF8'
@@ -1164,9 +1189,9 @@ def update_mol3d(mol3d_default, snp_selected_cell,
                     
         # generate s positions color mapping dict
         poss_color_map = {}
-                
+        
         for x in var_spike_pos:
-            poss_color_map[x] = 'orange'
+            poss_color_map[x] = '#FFA770'
 
         for x in sample_spike_pos:
             poss_color_map[x] = '#459DF8'
@@ -1177,14 +1202,17 @@ def update_mol3d(mol3d_default, snp_selected_cell,
         label_text = list(set(var_spike_mut+sample_spike_mut))
         label_pos  = [int(re.search('(\d+)', x).group(1)) for x in label_text]
         
-        # hightlight RBD
-        opts = dict(highlight_bg_indexes = spike_pdb.spike2pdb_residue_indexes(range(319,541)))
+        # hightlight RBD and D chain
+        opts = dict(
+            highlight_bg_indexes = spike_pdb.spike_pos2pdb_residue_index(range(319,541)),
+            highlight_bg_chain = ['D']
+        )
         
         styles = spike_pdb.pdb_style(residue_indexes_color_map=residue_indexes_color_map, **opts)
         labels = spike_pdb.residue_labels(label_pos, label_text, poss_color_map=poss_color_map, font_size=10)
         zoomTo = mol3d_default['zoomTo']
 
-    return [zoom, zoomTo, styles, labels, alert_content, alert_is_open]
+    return [zoom, zoomTo, styles, labels, alert_content, alert_is_open, stored_mol3d_label]
 
 
 # select variant -> variant-mutation plot
@@ -1240,18 +1268,17 @@ def update_variant_mutation(variants, mutations, num_shared):
 # aggregate-data -> igv
 @app.callback(
     Output('reference-igv', 'locus'),
-    Output('reference-igv', 'reference'),
     [
         Input('snp-table', 'active_cell'),
         Input('igv-range-btn', 'n_clicks'),
         Input('snp-overview-graph', 'clickData'),
         State('aggregate-data', 'data'),
-        State('reference-igv', 'locus'),
-        State('reference-igv', 'reference'),
     ],
     prevent_initial_call=True
 )
-def igv_update(snp_selected_cell, btn_clicks, so_click_data, data, locus, igv_reference):
+def igv_update(snp_selected_cell, btn_clicks, so_click_data, data):
+    
+    locus = no_update
     
     ctx = dash.callback_context
 
@@ -1269,28 +1296,30 @@ def igv_update(snp_selected_cell, btn_clicks, so_click_data, data, locus, igv_re
             if snp_selected_cell and snp_selected_cell['column_id']=='SNP_position':                
                 pos = snp_selected_cell['row_id'] # 'row_id' is 'SNP_position'
                 locus = f"NC_045512_2:{pos}-{pos}"
-
-        # elif triggered_id == 'header-title':
-        #         igv_reference['tracks'] = generate_igv_graph()
     
-    return [locus, igv_reference]
+    return locus
+
 
 # click snp --> scrollIntoView IGV
 app.clientside_callback(
     """
-    function(clicks, elemid) {
+    function(ov_clicks, st_clicks, elemid) {
+        if(st_clicks.hasOwnProperty("column_id") && st_clicks["column_id"]!="SNP_position"){
+            return
+        }
+        
         document.getElementById(elemid).scrollIntoView({
             behavior: 'smooth'
         });
     }
     """,
     Output('callback-holder', 'data'),
-    [
-        Input('snp-overview-graph', 'clickData'),
-        State('igv-session', 'id'),
-    ],
+    Input('snp-overview-graph', 'clickData'),
+    Input('snp-table', 'active_cell'),
+    State('igv-session', 'id'),
     prevent_initial_call=True
 )
+
 
 if __name__ == '__main__':
     app.run_server(mode='external', debug=True, port=8053, 

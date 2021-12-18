@@ -1,6 +1,6 @@
 import pandas as pd
 import logging
-from dash_bio_utils import pdb_parser, create_mol3d_style
+from dash_bio_utils import pdb_parser
 from Bio.SeqUtils import seq1
 from Bio import SearchIO
 
@@ -8,16 +8,18 @@ class SpikePdbData:
     """
     This is the class to process PDB file for spike protein
     """
-    def __init__(self, pdb, blastxml):
+    def __init__(self, pdb:str, blastxml:str):
         """
-        blastxml: Query sequence is the reference spike protein sequence. Subject sequence is PDB sequences
+        : param pdb : A .pdb file
+        : param blastxml: Query sequence is the reference spike protein sequence. Subject sequence is PDB sequences
         """
         self.pdb = pdb
         self.blastxml = blastxml
         self.pdb_data = None
         self.pdb_df = None
-        self.blast_hsp = None
+        self.blast_qresult = None
         self._process()
+
 
     def _process(self):
         """
@@ -33,50 +35,64 @@ class SpikePdbData:
         df['residue'] = df['residue_name'].str[0:3:1].map(seq1)
         
         # alignment
-        blast_qresult = SearchIO.read(self.blastxml, "blast-xml")
-        blast_hsp = blast_qresult[0][0]
-
-        # rebuild residue index per chain for protein trimer
-        chain_length = int(len(''.join(df.residue).rstrip('X'))/3)
-        df['residue_index_chain'] = -1
-        idx = df['residue']!='X'
-        df.loc[idx, 'residue_index_chain'] = df.loc[idx, 'residue_index']%chain_length
+        blast_qresult = SearchIO.read(self.blastxml, "blast-xml")[0]
+        # blast_hsp = blast_qresult
 
         self.pdb_df = df
-        self.blast_hsp = blast_hsp
+        self.blast_qresult = blast_qresult
         self.pdb_data = pdb_data
     
-    def pdb_seq(self):
+
+    def pdb_seq(self) -> str:
         """
         return all protein sequences (concat all chains) of the pdb file
         """
         return ''.join(self.pdb_df.residue.tolist())
     
-    def pdb_style(self, residue_indexes=[], residue_indexes_color_map={}, highlight_bg_indexes=[], highlight_bg_indexes_color_map={}):
+
+    def pdb_style(self, residue_indexes: list=[], 
+                        residue_indexes_color_map: dict={}, 
+                        highlight_bg_indexes: list=[], 
+                        highlight_bg_indexes_color_map: dict={},
+                        highlight_bg_chain: list=[],
+                        highlight_bg_chain_color_map: dict={}) -> list:
+        """
+        return a list of dict for 3DMol
+        """
         styles = []
 
         for x in self.pdb_data['atoms']:
-            rsd_idx = x['residue_index']
+            # get residue index
+            ridx = x['residue_index']
+            chain = x['chain']
 
-            if rsd_idx in residue_indexes_color_map:
-                styles.append({'visualization_type': 'sphere', 'color': residue_indexes_color_map[rsd_idx]}),                        
-
-            elif rsd_idx in residue_indexes:
+            if ridx in residue_indexes_color_map:
+                styles.append({'visualization_type': 'sphere', 'color': residue_indexes_color_map[ridx]}),                        
+            elif ridx in residue_indexes:
+                # coloring blue
                 styles.append({'visualization_type': 'sphere', 'color': '#459DF8'})
-
-            elif rsd_idx in highlight_bg_indexes_color_map:
-                styles.append({'visualization_type': 'stick', 'color': highlight_bg_indexes_color_map[rsd_idx]})
-
-            elif rsd_idx in highlight_bg_indexes:
-                styles.append({'visualization_type': 'stick', 'color': '#E45E68'})
-
+            elif ridx in highlight_bg_indexes_color_map:
+                styles.append({'visualization_type': 'stick', 'color': highlight_bg_indexes_color_map[ridx]})
+            elif ridx in highlight_bg_indexes:
+                # coloring red
+                styles.append({'visualization_type': 'stick', 'color': '#E68E96'})
+            elif chain in highlight_bg_chain_color_map:
+                styles.append({'visualization_type': 'stick', 'color': highlight_bg_chain_color_map[chain]})
+            elif chain in highlight_bg_chain:
+                # coloring green
+                styles.append({'visualization_type': 'stick', 'color': '#73C991'})
             else:
+                # coloring grey
                 styles.append({'visualization_type': 'line', 'color': '#AAAAAA'})
                     
         return styles
 
     
-    def residue_labels(self, poss=[], label_text=[], font_size=12, background_opacity=0.8, poss_color_map={}):
+    def residue_labels(self, poss: list=[], 
+                             label_text: list=[], 
+                             font_size: int=12, 
+                             background_opacity: float=0.8, 
+                             poss_color_map: dict={}) -> list:
         labels = []
         
         for pos, text in zip(poss, label_text):
@@ -86,10 +102,11 @@ class SpikePdbData:
             fontColor = "black"
             
             # convert spike position to pdb_residue_index_chain
-            residue_index = self.spike2pdb_residue_index_chain(pos)
+            residue_indexes = self.spike_pos2pdb_residue_index([pos])
 
             # retrieve atoms by residue_index_chain
-            df = self.pdb_df.query(f'residue_index_chain=={residue_index}')
+            dfidx = self.pdb_df.residue_index.isin(residue_indexes)
+            df = self.pdb_df[dfidx]
 
             for index, row in df.iterrows():
                 label = {
@@ -108,51 +125,43 @@ class SpikePdbData:
         
         return labels
     
-    def spike2pdb_residue_index_chain(self, pos: int):
-        (qs, qe) = self.blast_hsp.query_range
-        (hs, he) = self.blast_hsp.hit_range
-        
-        aln_pos = pos - qs
 
-        if aln_pos < 0:
-            logging.info("position out of range.")
-            return None
-        else:
-            # adjust alignment position if gaps are in the query seuqneces
-            query_gaps = str(self.blast_hsp.query.seq)[:aln_pos].count('-')
-            padding = 0
-            while query_gaps != padding:
-                padding = query_gaps
-                aln_pos += padding
-                query_gaps = str(self.blast_hsp.query.seq)[:aln_pos].count('-')
-        
-        # get corresponding target position
-        target_base = str(self.blast_hsp.hit[aln_pos-1:aln_pos].seq)
+    def spike_pos2pdb_residue_index(self, poss:list=[]) -> list:
 
-        if target_base=='-':
-            # corresponding base is missing from the pdb sequences
-            # return None
-            return None
-        else:
-            gaps = str(self.blast_hsp.hit[:aln_pos].seq).count('-')
-            # The position need to -1 because pdb residue_index position is 0-basis
-            return aln_pos-gaps+hs-1
-
-    
-    def spike2pdb_residue_indexes(self, poss=[]):
-        """
-        Pass in spike positions and get pdb_residue_indexes
-        
-        : param poss: list 
-        : return residue_indexes: list 
-        """
         residue_indexes = []
-        
+
         for pos in poss:
-            # get residue_index_per chain
-            residue_index = self.spike2pdb_residue_index_chain(pos)
-            # get residue_index series
-            idxes = self.pdb_df.query(f'residue_index_chain=={residue_index}').residue_index.tolist()
-            residue_indexes += idxes
-        
+            # iterate all blast hsps, it will convert spike position to the positions of all possible chains
+            for idx, blast_hsp in enumerate(self.blast_qresult):
+                (qs, qe) = blast_hsp.query_range
+                (hs, he) = blast_hsp.hit_range
+                
+                aln_pos = pos - qs
+
+                if aln_pos < 0:
+                    logging.info(f"S position {aln_pos} is out of range on HSP{idx}.")
+                    # residue_indexes.append(None)
+                    continue
+                else:
+                    # adjust alignment position if gaps are in the query seuqneces
+                    query_gaps = str(blast_hsp.query.seq)[:aln_pos].count('-')
+                    padding = 0
+                    while query_gaps != padding:
+                        padding = query_gaps
+                        aln_pos += padding
+                        query_gaps = str(blast_hsp.query.seq)[:aln_pos].count('-')
+                
+                # get corresponding target position
+                target_base = str(blast_hsp.hit[aln_pos-1:aln_pos].seq)
+
+                if target_base=='-':
+                    # corresponding base is missing from the pdb sequences
+                    logging.info(f"S position {aln_pos} is a gap on HSP{idx}.")
+                    # residue_indexes.append(None)
+                    continue
+                else:
+                    gaps = str(blast_hsp.hit[:aln_pos].seq).count('-')
+                    # The position need to -1 because pdb residue_index position is 0-basis
+                    residue_indexes.append(aln_pos-gaps+hs-1)
+
         return residue_indexes

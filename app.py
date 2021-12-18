@@ -11,5 +11,4 @@ app.title = "SARS-CoV-2 SRA"
 app._favicon = "favicon.ico"
 
 # acc_num = 'SRR14135907'
-
 server = app.server

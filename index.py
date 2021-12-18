@@ -117,7 +117,7 @@ app.clientside_callback(
 
 
 if __name__ == '__main__':
-    app.run_server(#port=8877,
+    app.run_server(port=8877,
                    threaded=True,
-                   #debug=True
+                   debug=True
                   )
