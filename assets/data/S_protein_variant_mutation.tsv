@@ -35,6 +35,7 @@ Delta	S:T19R	N
 Delta	S:V70F	Y
 Delta	S:T95I	N
 Delta	S:G142D	Y
+Delta	S:Y145H	Y
 Delta	S:E156*	Y
 Delta	S:F157*	Y
 Delta	S:R158G	N
@@ -89,6 +90,9 @@ Omicron	S:G339D	N
 Omicron	S:S371L	N
 Omicron	S:S373P	N
 Omicron	S:S375F	N
+Omicron	S:T376A	Y
+Omicron	S:D405N	Y
+Omicron	S:R408S	Y
 Omicron	S:K417N	N
 Omicron	S:N440K	N
 Omicron	S:G446S	N

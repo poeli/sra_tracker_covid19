@@ -139,7 +139,7 @@ class SpikePdbData:
                 aln_pos = pos - qs
 
                 if aln_pos < 0:
-                    logging.info(f"S position {aln_pos} is out of range on HSP{idx}.")
+                    logging.debug(f"S position {aln_pos} is out of range on HSP{idx}.")
                     # residue_indexes.append(None)
                     continue
                 else:
@@ -156,7 +156,7 @@ class SpikePdbData:
 
                 if target_base=='-':
                     # corresponding base is missing from the pdb sequences
-                    logging.info(f"S position {aln_pos} is a gap on HSP{idx}.")
+                    logging.debug(f"S position {aln_pos} is a gap on HSP{idx}.")
                     # residue_indexes.append(None)
                     continue
                 else:

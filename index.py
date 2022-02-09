@@ -31,8 +31,16 @@ navbar = dbc.Navbar(
                 # Use row and col to control vertical alignment of logo / brand
                 dbc.Row(
                     [
-                        dbc.Col(html.Img(src="/assets/virus-solid-white.png", height="27px")),
-                        dbc.Col(dbc.NavbarBrand("SARS-CoV-2 SRA", className="ml-1")),
+                        # dbc.Col(html.Img(src="/assets/virus-solid-white.png", height="27px")),
+                        dbc.Col([
+                            html.Span([
+                                    html.I(className="fas fa-virus"),
+                                ],
+                                className="me-2",
+                                style={"font-size": "1.1rem", "color": "white"}
+                            ),
+                            dbc.NavbarBrand("SARS-CoV-2 SRA", className="ml-1")
+                        ]),
                     ],
                     align="center",
                 ),
@@ -119,5 +127,5 @@ app.clientside_callback(
 if __name__ == '__main__':
     app.run_server(port=8877,
                    threaded=True,
-                   debug=True
+                   #debug=True
                   )

@@ -1,7 +1,11 @@
 import dash
 import dash_bootstrap_components as dbc
 
-external_stylesheets = [dbc.themes.BOOTSTRAP]
+# external stylesheets
+external_stylesheets = [
+    dbc.themes.BOOTSTRAP, 
+    dbc.icons.FONT_AWESOME
+]
 
 app = dash.Dash(__name__, 
     external_stylesheets = external_stylesheets,
@@ -10,5 +14,4 @@ app = dash.Dash(__name__,
 app.title = "SARS-CoV-2 SRA"
 app._favicon = "favicon.ico"
 
-# acc_num = 'SRR14135907'
 server = app.server

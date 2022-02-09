@@ -1028,8 +1028,8 @@ def update_genome_range(gene_sel, relayout_data):
 
     return [1, 29903]
 
-    
-# aggregate-data -> snp-overview-graph
+
+# aggregate-data -> snp-overview-graph / snp-table
 @app.callback(Output('snp-overview-graph', 'figure'),
               Output('snp-table', 'data'),
               [
